@@ -1,12 +1,13 @@
 {
     "input": {
-        "imagePath": "/img/tree.jpg"
+        "imagePath": "/img/tree.jpg",
+        "isVideo": false
     },
     "output": {
         "domQuery": "#canvas"
     },
     "dont_create_base_texture": false,
     "has_framebuffer": true,
-    "framebuffers_n": 1,
+    "framebuffers_n": 2,
     "framebuffers_offset": 1
 }

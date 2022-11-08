@@ -94,15 +94,9 @@ const textureData = (function () {
         return fbo_data;
     }
 
-    function _setFramebuffer(gl, program_obj, fbo, width, height) {
-        let program = program_obj.program,
-            uniforms = program_obj.uniforms;
-
+    function _setFramebuffer(gl, fbo, width, height) {
         // make this the framebuffer we are rendering to.
         gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-
-        // Tell the shader the resolution of the framebuffer.
-        uniforms.u_resolution && uniforms.u_resolution.set(gl, program, '2f', [width, height]);
 
         // Tell WebGL how to convert from clip space to pixels
         gl.viewport(0, 0, width, height);
