@@ -14,7 +14,8 @@ const config = [{
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "wtex.js",
-    library: "wtex"
+    library: "wtex",
+    libraryTarget: 'umd'
   },
   plugins: [
     // Add your plugins here
