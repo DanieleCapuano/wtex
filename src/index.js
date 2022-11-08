@@ -3,6 +3,7 @@ import { init_program } from "./program-def";
 import { render_loop } from "./program-loop";
 
 export const texturize = _texturize;
+export default texturize;
 
 
 let running_program = {};
