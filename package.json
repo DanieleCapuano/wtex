@@ -20,8 +20,9 @@
     "webpack-cli": "^4.10.0"
   },
   "version": "1.0.0",
-  "description": "My webpack project",
-  "name": "my-webpack-project",
+  "description": "WTEX: a (VERY) simple texturing test system using webgl2",
+  "name": "wtex",
+  "main": "dist/wtex.js",
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
