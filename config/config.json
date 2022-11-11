@@ -1,6 +1,6 @@
 {
     "input": {
-        "imagePath": "/img/tree.jpg",
+        "paths": ["/img/tree.jpg", "/img/city.jpg"],
         "isVideo": false
     },
     "output": {

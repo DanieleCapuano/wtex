@@ -2,18 +2,18 @@ import { get_config, parse_config } from "./config";
 import { init_program } from "./program-def";
 import { render_loop } from "./program-loop";
 
-export const texturize = _texturize;
-export default texturize;
+export const texturize_quad = _texturize_quad;
+export default texturize_quad;
 
 
 let running_program = {};
 
-function _texturize(input_opts) {
+function _texturize_quad(input_opts) {
     const { vertex_shader, fragment_shader, config_path, WIN_LOADED } = input_opts;
     return new Promise((res) => {
         const _onloaded = () => {
             get_config(config_path || "/config/config.json").then(json_conf => {
-                _start(Object.assign(json_conf, {
+                _start(Object.assign(input_opts, json_conf, {
                     vertex_shader,
                     fragment_shader
                 })).then(res);
@@ -25,9 +25,10 @@ function _texturize(input_opts) {
 }
 
 function _start(config) {
-    return parse_config(config).then((parsed_objs) => {
-        let canvas = parsed_objs.find(o => o.type === 'output').elem,
-            inputElement = parsed_objs.find(o => o.type === 'input').elem,
+    return parse_config(config).then((parsed_obj) => {
+        const { input, output } = parsed_obj;
+        let canvas = output.elem,
+            inputElement = input.elem,
             gl = canvas.getContext("webgl2", {
                 desynchronized: true,
                 powerPreference: 'high-performance'
@@ -37,7 +38,7 @@ function _start(config) {
             return;
         }
 
-        config = Object.assign({}, config, {
+        config = Object.assign(config, parsed_obj, {
             gl,
             canvas,
             inputElement

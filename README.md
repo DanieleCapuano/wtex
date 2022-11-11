@@ -44,7 +44,8 @@ The input image could be an image or a video. A DOM element is built using the i
     vertex_shader: "<your vertex shader code as text>",
     fragment_shader: "<your fragment shader code as text>",
     config_path: "/config/config.json", //the path where the config json file should be downloaded, defaults to "/config/config.json"
-    WIN_LOADED: true    //a boolean which says if a window.addEventListener('load') should be used before start or not
+    WIN_LOADED: true,    //a boolean which says if a window.addEventListener('load') should be used before start or not
+    frame_update: (current_program, gl, opts) => { /* add any logic*/ } //a function called, if provided, at each draw iteration before actual drawing command
 }
 ```
 
@@ -52,8 +53,9 @@ The input image could be an image or a video. A DOM element is built using the i
 ```javascript
 {
     "input": {
-        "imagePath": "/img/tree.jpg",    //the path where the image should be retrieved
-        "domQuery": "#canvas"           //OR as an alternative, the dom query to select a dom element to read from
+        "paths": ["/img/tree.jpg"],     //the array of paths where the image should be retrieved, multiple image paths are allowed
+        "domQuery": "#imgDomId"           //OR as an alternative, the dom query to select a dom element to read from
+        "isVideo": false                //boolean flag which specifies if the input is expected to be a video or an image
     },
     "output": {
         "domQuery": "#canvas"           //the dom query to select a dom element to write to

@@ -65,7 +65,12 @@ const textureData = (function () {
             srcType,
             data
         ];
-        gl.texImage2D.apply(gl, args);
+        try {
+            gl.texImage2D.apply(gl, args);
+        }
+        catch(e) {
+            console.warn("Error loading image", img_data);
+        }
     }
 
     function _create_fbo_textures(program_obj, gl, n, offset, image_width, image_height) {
