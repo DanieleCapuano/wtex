@@ -8,6 +8,6 @@
     },
     "dont_create_base_texture": false,
     "has_framebuffer": true,
-    "framebuffers_n": 2,
+    "framebuffers_n": 1,
     "framebuffers_offset": 1
 }
