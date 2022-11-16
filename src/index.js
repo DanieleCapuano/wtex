@@ -1,9 +1,12 @@
 import { get_config, parse_config } from "./config";
 import { init_program } from "./program-def";
 import { render_loop } from "./program-loop";
+import { textureData } from "./texture-common";
 
 export const texturize_quad = _texturize_quad;
 export default texturize_quad;
+
+export const texture_data = textureData;
 
 
 let running_program = {};
