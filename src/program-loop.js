@@ -71,7 +71,7 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
 
-        textureData.draw_into_texture(gl, inputEl, window.innerWidth, window.innerHeight);
+        textureData.draw_into_texture(gl, inputEl, gl.canvas.width, gl.canvas.height);
         image_drawn_in_texture = true;
         opts.input.should_update_texture = false;
     }
