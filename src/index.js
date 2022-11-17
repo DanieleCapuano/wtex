@@ -36,7 +36,7 @@ function _start(config) {
         const { input, output } = parsed_obj;
         let canvas = output.elem,
             inputElement = input.elem,
-            gl = canvas.getContext("webgl2", {
+            gl = config.gl || canvas.getContext("webgl2", {
                 desynchronized: true,
                 powerPreference: 'high-performance'
             });
