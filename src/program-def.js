@@ -33,6 +33,10 @@ function _init_program(gl, opts) {
         console.warn(e);
     }
 
+    if (opts.add_program_configuration) {
+        p_o = opts.add_program_configuration(p_o);
+    }
+
     return p_o;
 }
 

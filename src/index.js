@@ -2,11 +2,15 @@ import { get_config, parse_config } from "./config";
 import { init_program } from "./program-def";
 import { render_loop } from "./program-loop";
 import { textureData } from "./texture-common";
+import * as _program_def from "./program-def";
+import * as _webgl_utils from "./utils";
 
 export const texturize_quad = _texturize_quad;
 export default texturize_quad;
 
 export const texture_data = textureData;
+export const program_def = _program_def;
+export const webgl_utils = _webgl_utils;
 
 
 let running_program = {};
