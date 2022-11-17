@@ -34,7 +34,7 @@ function _init_program(gl, opts) {
     }
 
     if (opts.add_program_configuration) {
-        p_o = opts.add_program_configuration(p_o);
+        p_o = opts.add_program_configuration(p_o, gl, opts);
     }
 
     return p_o;
