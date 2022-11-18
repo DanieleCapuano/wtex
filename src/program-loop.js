@@ -79,6 +79,7 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
     }
 
     _update_uniforms_for_fbo(current_program, gl, opts);
+    gl.activeTexture(gl.TEXTURE0);
 
     // loop through each effect we want to apply.
     for (var ii = framebuffers_offset; ii < framebuffers_n + framebuffers_offset; ++ii) {
