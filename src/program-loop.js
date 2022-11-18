@@ -60,15 +60,18 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
     if (opts.input.isVideo || (!image_drawn_in_texture && inputEl.complete)) {
-        // start with the original image on unit 0
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, (opts.textures || [])[opts.base_texture_i || 0] || base_texture);
+        const texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture,
+            texture_unit = gl.TEXTURE0;
 
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
 
         if (!(opts.textures || opts.base_texture_i !== undefined)) {
-            texture_data.draw_into_texture(gl, inputEl, gl.canvas.width, gl.canvas.height);
+            texture_data.draw_into_texture(
+                gl,
+                texture_to_draw, texture_unit,
+                inputEl, gl.canvas.width, gl.canvas.height
+            );
         }
         image_drawn_in_texture = true;
         opts.input.should_update_texture = false;
@@ -79,11 +82,12 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
     }
 
     _update_uniforms_for_fbo(current_program, gl, opts);
-    gl.activeTexture(gl.TEXTURE0);
+    // gl.activeTexture(gl.TEXTURE0);
 
     // loop through each effect we want to apply.
     for (var ii = framebuffers_offset; ii < framebuffers_n + framebuffers_offset; ++ii) {
         // Setup to draw into one of the framebuffers.
+        gl.bindTexture(gl.TEXTURE_2D, null);
         texture_data.set_framebuffer(
             gl,
             texture_data.get_fbo(current_program, ii),
