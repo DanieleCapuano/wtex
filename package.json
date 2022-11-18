@@ -17,7 +17,8 @@
     "raw-loader": "^4.0.2",
     "copy-webpack-plugin": "^11.0.0",
     "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^4.10.0",
+    "wbase": "https://github.com/DanieleCapuano/wbase.git"
   },
   "version": "1.0.0",
   "description": "WTEX: a (VERY) simple texturing test system using webgl2",

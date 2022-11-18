@@ -1,6 +1,4 @@
-import { draw_shapes } from './utils';
-import { textureData } from './texture-common';
-import { resizeCanvasToDisplaySize } from "./utils";
+import { draw_shapes, textureData, resizeCanvasToDisplaySize } from 'wbase';
 
 export const render_loop = _render;
 export const program_loop_fn = _draw_fbos_textures.bind(null, _draw_main_texture);
@@ -50,7 +48,7 @@ function _render(running_program, opts) {
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        running_program.exec_loop(running_program, gl, opts);
+        (running_program.exec_loop || program_loop_fn)(running_program, gl, opts);
     }
 }
 
