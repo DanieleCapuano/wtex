@@ -59,10 +59,11 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
 
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
-    // start with the original image on unit 0
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, base_texture);
     if (opts.input.isVideo || (!image_drawn_in_texture && inputEl.complete)) {
+        // start with the original image on unit 0
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, (opts.textures || [])[opts.base_texture_i || 0] || base_texture);
+
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
 
@@ -70,7 +71,7 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         image_drawn_in_texture = true;
         opts.input.should_update_texture = false;
     }
-    
+
     if (frame_update) {
         frame_update(current_program, gl, opts);
     }
