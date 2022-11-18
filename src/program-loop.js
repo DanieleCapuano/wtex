@@ -82,12 +82,12 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
     }
 
     _update_uniforms_for_fbo(current_program, gl, opts);
-    // gl.activeTexture(gl.TEXTURE0);
+    gl.activeTexture(gl.TEXTURE0);
 
     // loop through each effect we want to apply.
     for (var ii = framebuffers_offset; ii < framebuffers_n + framebuffers_offset; ++ii) {
         // Setup to draw into one of the framebuffers.
-        gl.bindTexture(gl.TEXTURE_2D, null);
+        // gl.bindTexture(gl.TEXTURE_2D, null);
         texture_data.set_framebuffer(
             gl,
             texture_data.get_fbo(current_program, ii),
