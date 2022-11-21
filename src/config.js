@@ -36,6 +36,7 @@ function _parse_elem(obj) {
             obj.current_img_index = 0;
             obj.elem.src = paths[obj.current_img_index];
             obj.elem.addEventListener('load', res.bind(null, obj));
+            obj.elem.addEventListener('error', res.bind(null, obj));
         }
         else {
             res(obj);
