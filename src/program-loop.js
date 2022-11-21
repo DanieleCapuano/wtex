@@ -57,12 +57,15 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         { framebuffers_offset, framebuffers_n, frame_update } = opts,
         inputEl = opts.inputElement || document.getElementById(opts.inputElementId);
 
-    const texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture,
-        texture_unit = gl.TEXTURE0;
+    let texture_to_draw,
+        texture_unit;
 
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
     if (opts.input.isVideo || (!image_drawn_in_texture && inputEl.complete)) {
+        texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture;
+        texture_unit = gl.TEXTURE0;
+
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
 
@@ -83,6 +86,8 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
 
     _update_uniforms_for_fbo(current_program, gl, opts);
 
+    texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture;
+    texture_unit = opts.base_active_texture || gl.TEXTURE0;
     gl.activeTexture(texture_unit);
     gl.bindTexture(gl.TEXTURE_2D, texture_to_draw);
 
