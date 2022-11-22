@@ -1,5 +1,3 @@
-import { parse } from "postcss";
-
 export const get_config = _get_config;
 export const parse_config = _parse_config;
 
