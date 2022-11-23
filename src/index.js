@@ -3,16 +3,18 @@ import { init_program } from "wbase";
 import { render_loop, stop_loop } from "./program-loop";
 
 const texturize_quad = _texturize_quad;
+const texture_stop = _texture_stop;
 
 export {
-    texturize_quad, stop_loop
+    texturize_quad, texture_stop
 };
 export default {
-    texturize_quad, stop_loop
+    texturize_quad, texture_stop
 };
 
 
 let running_program = {};
+let configRef = {};
 
 function _texturize_quad(input_opts) {
     const { vertex_shader, fragment_shader, config_path, WIN_LOADED } = input_opts;
@@ -49,8 +51,13 @@ function _start(config) {
             canvas,
             inputElement
         });
+        configRef = config;
         running_program = init_program(gl, config);
 
         return render_loop(running_program, config);
     });
+}
+
+function _texture_stop() {
+    stop_loop(configRef);
 }
