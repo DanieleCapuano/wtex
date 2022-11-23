@@ -1,9 +1,15 @@
 import { get_config, parse_config } from "./config";
 import { init_program } from "wbase";
-import { render_loop } from "./program-loop";
+import { render_loop, stop_loop } from "./program-loop";
 
-export const texturize_quad = _texturize_quad;
-export default texturize_quad;
+const texturize_quad = _texturize_quad;
+
+export {
+    texturize_quad, stop_loop
+};
+export default {
+    texturize_quad, stop_loop
+};
 
 
 let running_program = {};

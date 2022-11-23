@@ -1,14 +1,24 @@
 import { draw_shapes, texture_data, resizeCanvasToDisplaySize } from 'wbase';
 
 export const render_loop = _render;
+export const stop_loop = _stop_loop;
 export const program_loop_fn = _draw_fbos_textures.bind(null, _draw_main_texture);
 
 let image_drawn_in_texture = false;
+let _stop_running = false;
+
+function _stop_loop() {
+    _stop_running = true;
+    gl.useProgram(null);
+    gl.bindVertexArray(null);
+}
 
 
 function _render(running_program, opts) {
     const { gl, canvas } = opts;
     const { uniforms, program, vertex_data } = running_program;
+    
+    _stop_running = false;
 
     resizeCanvasToDisplaySize(canvas);
 
@@ -29,7 +39,9 @@ function _render(running_program, opts) {
     gl.disable(gl.DEPTH_TEST);
     gl.disable(gl.CULL_FACE);
 
-    uniforms.u_image.set(gl, program, '1i', 0);
+    if (uniforms.u_image) {
+        uniforms.u_image.set(gl, program, '1i', 0);
+    }
 
     return draw_loop();
 
@@ -43,7 +55,9 @@ function _render(running_program, opts) {
 
         // Tell WebGL how to convert from clip space to pixels
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-        uniforms.u_resolution.set(gl, program, '2f', [gl.canvas.width, gl.canvas.height]);
+        if (uniforms.u_resolution) {
+            uniforms.u_resolution.set(gl, program, '2f', [gl.canvas.width, gl.canvas.height]);
+        }
         // Clear the canvas
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -67,7 +81,9 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         texture_unit = gl.TEXTURE0;
 
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-        uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
+        if (uniforms.u_resolution) {
+            uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
+        }
 
         if (!(opts.textures || opts.base_texture_i !== undefined)) {
             texture_data.draw_into_texture(
