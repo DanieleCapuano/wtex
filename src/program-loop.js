@@ -55,8 +55,10 @@ function _render(running_program, opts) {
     // DRAW
 
     function draw_loop() {
-        if (!_stop_running) requestAnimationFrame(draw_loop);
-
+        if (_stop_running) return;
+        
+        requestAnimationFrame(draw_loop);
+        
         // Tell WebGL how to convert from clip space to pixels
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         if (uniforms.u_resolution) {
