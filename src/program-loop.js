@@ -23,15 +23,18 @@ function _render(running_program, opts) {
     const { uniforms, program, vertex_data } = running_program;
     
     _stop_running = false;
+    image_drawn_in_texture = false;
 
     resizeCanvasToDisplaySize(canvas);
 
-    const _update_img = (e) => {
-        resizeCanvasToDisplaySize(canvas);
-        image_drawn_in_texture = false;
-    };
-    window.addEventListener('resize', _update_img);
-    window.addEventListener('image-update', _update_img);
+    //TODO fix the resize listener and behavior which follows
+    //
+    // const _update_img = () => {
+    //     resizeCanvasToDisplaySize(canvas);
+    //     image_drawn_in_texture = false;
+    // };
+    // window.addEventListener('resize', _update_img);
+    // window.addEventListener('image-update', _update_img);
 
     // Tell it to use our program (pair of shaders)
     gl.useProgram(program);
