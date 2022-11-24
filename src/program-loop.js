@@ -85,7 +85,7 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
 
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
-    if (opts.input.isVideo || (!image_drawn_in_texture && inputEl.complete)) {
+    if (opts.input.isVideo || (!image_drawn_in_texture && (inputEl || {}).complete)) {
         texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture;
         texture_unit = gl.TEXTURE0;
 
