@@ -94,7 +94,7 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
             uniforms.u_resolution.set(gl, current_program, '2f', [gl.canvas.width, gl.canvas.height]);
         }
 
-        if (!(opts.textures || opts.base_texture_i !== undefined)) {
+        if (!opts.textures && opts.base_texture_i === undefined) {
             texture_data.draw_into_texture(
                 gl,
                 texture_to_draw, texture_unit,
