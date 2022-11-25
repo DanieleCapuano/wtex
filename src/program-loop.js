@@ -80,7 +80,8 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         { framebuffers_offset, framebuffers_n, frame_update } = opts,
         inputEl = opts.inputElement || document.getElementById(opts.inputElementId);
 
-    let texture_to_draw;
+    let texture_to_draw,
+        texture_unit;
 
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
