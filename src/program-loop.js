@@ -80,14 +80,12 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         { framebuffers_offset, framebuffers_n, frame_update } = opts,
         inputEl = opts.inputElement || document.getElementById(opts.inputElementId);
 
-    let texture_to_draw,
-        texture_unit;
+    let texture_to_draw;
 
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
     if (opts.input.isVideo || (!image_drawn_in_texture && (inputEl || {}).complete)) {
         texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture;
-        texture_unit = gl.TEXTURE0;
 
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         if (uniforms.u_resolution) {
@@ -95,9 +93,10 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
         }
 
         if (!opts.textures && opts.base_texture_i === undefined) {
+            let texture_unit_offset = 0;
             texture_data.draw_into_texture(
                 gl,
-                texture_to_draw, texture_unit,
+                texture_to_draw, texture_unit_offset,
                 inputEl, gl.canvas.width, gl.canvas.height
             );
         }
