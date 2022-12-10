@@ -60,8 +60,6 @@ function _render(running_program, opts) {
     function draw_loop() {
         if (_stop_running) return;
         
-        requestAnimationFrame(draw_loop);
-        
         // Tell WebGL how to convert from clip space to pixels
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         if (uniforms.u_resolution) {
@@ -72,6 +70,8 @@ function _render(running_program, opts) {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         (running_program.exec_loop || program_loop_fn)(running_program, gl, opts);
+
+        requestAnimationFrame(draw_loop);
     }
 }
 
