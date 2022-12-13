@@ -36,6 +36,7 @@ function _render(running_program, opts) {
     // window.addEventListener('resize', _update_img);
     // window.addEventListener('image-update', _update_img);
     if (opts.input.isVideo && ('requestVideoFrameCallback' in HTMLVideoElement.prototype)) {
+        let inputEl = opts.inputElement || document.getElementById(opts.inputElementId)
         const doSomethingWithTheFrame = (now, metadata) => {
             // Do something with the frame.
             image_drawn_in_texture = false;
@@ -44,7 +45,7 @@ function _render(running_program, opts) {
                 video.requestVideoFrameCallback(doSomethingWithTheFrame);
             }
         };
-        videoEl.requestVideoFrameCallback(doSomethingWithTheFrame);
+        inputEl.requestVideoFrameCallback(doSomethingWithTheFrame);
     }
 
     // Tell it to use our program (pair of shaders)
