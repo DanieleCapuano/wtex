@@ -10,7 +10,7 @@ let _stop_running = false;
 function _stop_loop(opts) {
     const { gl } = opts;
     if (!gl) return;
-    
+
     _stop_running = true;
 
     gl.useProgram(null);
@@ -21,7 +21,7 @@ function _stop_loop(opts) {
 function _render(running_program, opts) {
     const { gl, canvas } = opts;
     const { uniforms, program, vertex_data } = running_program;
-    
+
     _stop_running = false;
     image_drawn_in_texture = false;
 
@@ -35,6 +35,17 @@ function _render(running_program, opts) {
     // };
     // window.addEventListener('resize', _update_img);
     // window.addEventListener('image-update', _update_img);
+    if (opts.input.isVideo && ('requestVideoFrameCallback' in HTMLVideoElement.prototype)) {
+        const doSomethingWithTheFrame = (now, metadata) => {
+            // Do something with the frame.
+            image_drawn_in_texture = false;
+
+            if (!_stop_running) {
+                video.requestVideoFrameCallback(doSomethingWithTheFrame);
+            }
+        };
+        videoEl.requestVideoFrameCallback(doSomethingWithTheFrame);
+    }
 
     // Tell it to use our program (pair of shaders)
     gl.useProgram(program);
@@ -59,9 +70,9 @@ function _render(running_program, opts) {
 
     function draw_loop() {
         if (_stop_running) return;
-        
+
         requestAnimationFrame(draw_loop);
-        
+
         // Tell WebGL how to convert from clip space to pixels
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         if (uniforms.u_resolution) {
@@ -85,7 +96,8 @@ function _draw_fbos_textures(next_fn, current_program, gl, opts) {
 
     opts.now = (performance.now() - current_program.start_time) / 1000.;
 
-    if (opts.input.isVideo || (!image_drawn_in_texture && (inputEl || {}).complete)) {
+    // if (opts.input.isVideo || (!image_drawn_in_texture && (inputEl || {}).complete)) {
+    if (!image_drawn_in_texture) {
         texture_to_draw = (opts.textures || [])[opts.base_texture_i || 0] || base_texture;
 
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
