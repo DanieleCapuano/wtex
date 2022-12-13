@@ -37,15 +37,15 @@ function _render(running_program, opts) {
     // window.addEventListener('image-update', _update_img);
     if (opts.input.isVideo && ('requestVideoFrameCallback' in HTMLVideoElement.prototype)) {
         let inputEl = opts.inputElement || document.getElementById(opts.inputElementId)
-        const doSomethingWithTheFrame = (now, metadata) => {
+        const registerTextureUpdate = (now, metadata) => {
             // Do something with the frame.
             image_drawn_in_texture = false;
 
             if (!_stop_running) {
-                video.requestVideoFrameCallback(doSomethingWithTheFrame);
+                inputEl.requestVideoFrameCallback(registerTextureUpdate);
             }
         };
-        inputEl.requestVideoFrameCallback(doSomethingWithTheFrame);
+        inputEl.requestVideoFrameCallback(registerTextureUpdate);
     }
 
     // Tell it to use our program (pair of shaders)
