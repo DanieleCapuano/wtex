@@ -5,13 +5,15 @@ export const stop_loop = _stop_loop;
 export const program_loop_fn = _draw_fbos_textures.bind(null, _draw_main_texture);
 
 let image_drawn_in_texture = false;
-let _stop_running = false;
+let _stop_running = false,
+    raf_id = null;  //requestAnimationFrame ID
 
 function _stop_loop(opts) {
     const { gl } = opts;
     if (!gl) return;
 
     _stop_running = true;
+    raf_id && cancelRequestAnimationFrame(raf_id);
 
     gl.useProgram(null);
     gl.bindVertexArray(null);
@@ -70,7 +72,10 @@ function _render(running_program, opts) {
     // DRAW
 
     function draw_loop() {
-        if (_stop_running) return;
+        if (_stop_running) {
+            raf_id && cancelRequestAnimationFrame(raf_id);
+            return;
+        }
 
         // Tell WebGL how to convert from clip space to pixels
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -83,7 +88,7 @@ function _render(running_program, opts) {
 
         (running_program.exec_loop || program_loop_fn)(running_program, gl, opts);
 
-        requestAnimationFrame(draw_loop);
+        raf_id = requestAnimationFrame(draw_loop);
     }
 }
 
