@@ -52,7 +52,8 @@ function _start(config) {
             inputElement
         });
         configRef = config;
-        running_program = init_program(gl, config);
+        running_program = config.running_program || init_program(gl, config);
+        config.running_program = running_program;
 
         return render_loop(running_program, config);
     });
