@@ -56,7 +56,7 @@ function _start(config) {
             //to be put into wbase library
             const { program, vertex_data, fbo_data } = config.running_program;
             const { pos_buffer, coord_buffer } = vertex_data;
-            (config.textures || []).forEach(t => gl.deleteTexture(t));
+            // (config.textures || []).forEach(t => gl.deleteTexture(t));
             [pos_buffer, coord_buffer].forEach(b => gl.deleteBuffer(b));
             (fbo_data || []).forEach(fbod => {
                 gl.deleteTexture(fbod.texture);
