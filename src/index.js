@@ -63,6 +63,8 @@ function _start(config) {
                 gl.deleteFramebuffer(fbod.fbo);
             });
             gl.deleteProgram(program);
+            
+            config.running_program = null;
         }
         running_program = config.running_program || init_program(gl, config);
         config.running_program = running_program;
