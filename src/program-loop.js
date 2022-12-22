@@ -73,6 +73,7 @@ function _render(running_program, opts) {
 
     function draw_loop() {
         if (_stop_running || gl.isContextLost()) {
+            _stop_running = true;
             raf_id && cancelAnimationFrame(raf_id);
             return;
         }
