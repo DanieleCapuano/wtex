@@ -72,6 +72,8 @@ function _texture_stop() {
 
         gl.deleteTexture(base_texture);
         (textures || []).forEach(t => gl.deleteTexture(t));
+        config.textures = null;
+
         [pos_buffer, coord_buffer].forEach(b => gl.deleteBuffer(b));
         (shaders || []).forEach(s => gl.deleteShader(s));
         (fbo_data || []).forEach(fbod => {
