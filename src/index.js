@@ -52,7 +52,7 @@ function _start(config) {
             inputElement
         });
         configRef = config;
-        
+
         running_program = init_program(gl, config);
         config.running_program = running_program;
 
@@ -66,11 +66,12 @@ function _texture_stop() {
 
     if (config.running_program) {
         //to be put into wbase library?
+        const { gl, textures } = config;
         const { program, vertex_data, fbo_data, shaders, base_texture } = config.running_program;
         const { pos_buffer, coord_buffer } = vertex_data;
 
         gl.deleteTexture(base_texture);
-        (config.textures || []).forEach(t => gl.deleteTexture(t));
+        (textures || []).forEach(t => gl.deleteTexture(t));
         [pos_buffer, coord_buffer].forEach(b => gl.deleteBuffer(b));
         (shaders || []).forEach(s => gl.deleteShader(s));
         (fbo_data || []).forEach(fbod => {
@@ -78,7 +79,7 @@ function _texture_stop() {
             gl.deleteFramebuffer(fbod.fbo);
         });
         gl.deleteProgram(program);
-        
+
         config.running_program = null;
     }
 }
